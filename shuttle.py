@@ -1,4 +1,3 @@
-# Create first network with Keras
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 import numpy as np
@@ -19,7 +18,7 @@ def preprocess(raw_X):
 
 #import dataset
 names = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'y']
-data = pd.read_table('../shuttle.trn', sep='\s+', header=None, names=names)
+data = pd.read_table('/home/german/Desktop/lambda_bayes/timeseries/data/shuttle.trn', sep='\s+', header=None, names=names)
 
 #check columns and data
 data.columns
@@ -35,7 +34,7 @@ data.head(5)
 #create ndarray
 data.shape
 y.shape
-data = data.values
+#data = data.values
 data
 
 x=preprocess(data)
@@ -58,7 +57,8 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 model.fit(x, y, epochs=20, batch_size=10)
 
 #test data
-test = pd.read_table('../shuttle.tst', sep='\s+', header=None, names=names)
+test = pd.read_table('/home/german/Desktop/lambda_bayes/timeseries/data/shuttle.tst', sep='\s+', header=None, names=names)
+
 test.head(5)
 y_t = test['y']
 y_t.head(5)
@@ -68,14 +68,9 @@ test.head(5)
 x_test = preprocess(test)
 x_test.shape
 
-y_t.shape
-
 y_t = y_t.values
-y_t
 y_t.shape
 y_t = np_utils.to_categorical(y_t)
 score = model.evaluate(x_test, y_t, batch_size=100)
 
-score[0]
-score[1]
 print score
